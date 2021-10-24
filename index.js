@@ -1,13 +1,23 @@
 const express = require('express');
+
 const app = express();
+
 const {users, schedules} = require('./data');
+
 const bcrypt = require('bcrypt');
+
+const { application } = require('express');
+
+const expbs = require('express-handlebars')
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+//view engine set-up
+app.engine('handlebars', expbs({ defaultLayout: 'main'}))
+app.set('view engine', 'handlebars');
+/*
 app.get('/', (req, res) => {
   res.send("Welcome to our schedule website");
 })
@@ -59,7 +69,20 @@ app.post('/schedules', function(req, res) {
   res.status(201).send(schedule)
 
 });
+*/
 
+//Routing
+app.get('/',(req,res)=>{
+  res.render('index');
+})
+
+app.get('/users',(req,res)=>{
+  res.render('users');
+})
+
+app.get('/schedules',(req,res)=>{
+  res.render('schedules');
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
