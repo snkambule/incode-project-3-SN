@@ -9,14 +9,20 @@ const bcrypt = require('bcrypt');
 const { application } = require('express');
 
 const expbs = require('express-handlebars')
+
 const port = 3000;
 
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 //view engine set-up
 app.engine('handlebars', expbs({ defaultLayout: 'main'}))
 app.set('view engine', 'handlebars');
+
+//static files 
+app.use('/static', express.static('public'));
+
 /*
 app.get('/', (req, res) => {
   res.send("Welcome to our schedule website");
@@ -77,11 +83,19 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/users',(req,res)=>{
-  res.render('users');
+  res.render('users', {
+    //show_users: users
+    show_users: users
+});
+
 })
 
 app.get('/schedules',(req,res)=>{
-  res.render('schedules');
+  res.render('schedules', {
+    //show_schedules: schedules
+    show_schedules: schedules
+});
+
 })
 
 app.listen(port, () => {
