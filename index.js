@@ -1,14 +1,14 @@
 const express = require('express');
 
-const app = express();
+const  app = express();
 
 const {users, schedules} = require('./data');
 
 const _ = require('underscore');
 
+const path = require('path');
 
 const exphbs = require('express-handlebars')
-
 
 const port = 3000;
 
@@ -18,64 +18,17 @@ app.use(express.urlencoded({ extended: false }));
 
 //view engine set-up
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
-app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars')
 
 //static files 
 app.use('/static', express.static('public'));
 
-/*
-app.get('/', (req, res) => {
-  res.send("Welcome to our schedule website");
-})
-
-app.get("/users", (req,res) =>{  
-    res.send(users);
-})
-
-app.get("/schedules", (req,res) => {   
-    res.send(schedules);
-})
-
-app.get("/users/:id", (req,res) =>{  
-   let id = req.params.id; 
-   if(users[id]){res.json(users[id])}
-   else{
-       res.json('Not found')
-   }
-})
-
-app.get("/users/:id/schedules", (req,res) => { 
-
-  let id = parseInt(req.params.id);
-  
-  const result = schedules.filter(schedule => schedule.user_id === id);
-
-  console.log(result)
-  
-  
-  if(result){res.json(result)}
-  else{
-      res.json('Not found')
-  }
-  
-})
-
-app.post('/users', function(req, res) {
-
-  const user = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, password: req.body.password }
-   users.push(user)
-   res.status(201).send(user)
-
+app.get('/index.html', function(req, res) {
+  res.sendFile(__dirname + "/" + "index.html");
 });
 
-app.post('/schedules', function(req, res) {
-  
-  const schedule = { user_id: req.body.user_id, day: req.body.day, start_at: req.body.start_at, end_at: req.body.end_at }
-  schedules.push(schedule)
-  res.status(201).send(schedule)
 
-});
-*/
 
 //Routing
 app.get('/',(req,res)=>{
@@ -121,15 +74,28 @@ app.get("/users/:id/schedules", (req,res) => {
    
 })
 
-app.post('/users/new', (req, res) => {
-  //Grab the request body 
-  
-  const user = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, 
+/*app.post('/users/new', (req, res) => {
+
+  let user = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, 
   password: req.body.password }
   users.push(user)
-  res.redirect('users', users);
+  res.redirect('/users', users);
 
-  });
+  });*/
+
+app.post('/users/new', function(req, res){
+    let body = req.body;
+
+    let creation = {
+        first_name: body.firstname,
+        last_name: body.lastname,
+        email: body.email,
+        password: body.password
+    };
+     let newPosts= users.push(creation)
+    res.redirect('/users', newPosts);
+});
+
 
 app.listen(port, () => {
 console.log(`Example app listening at http://localhost:${port}`)
