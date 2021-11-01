@@ -14,19 +14,7 @@ const port = 3000;
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }));
-
-var hbs = exphbs.create({});
-
-//helpers
-hbs.handlebars.registerHelper("index", function(id) {
-  
-var id = array.map(function(x) {return x.id; }).indexOf(idYourAreLookingFor);
-var objectFound = array[id];
-
-return objectFound;
-
-});
+app.use(express.urlencoded({ extended: false }));
 
 //view engine set-up
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
@@ -91,7 +79,7 @@ app.post('/schedules', function(req, res) {
 
 //Routing
 app.get('/',(req,res)=>{
-  res.render('index');
+  res.render('index', {title: 'Schedule Website' });
 })
 
 
@@ -133,6 +121,16 @@ app.get("/users/:id/schedules", (req,res) => {
    
 })
 
+app.post('/users/new', (req, res) => {
+  //Grab the request body 
+  
+  const user = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, 
+  password: req.body.password }
+  users.push(user)
+  res.redirect('users', users);
+
+  });
+
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+console.log(`Example app listening at http://localhost:${port}`)
 })

@@ -1,14 +1,7 @@
  <h2>Welcome to the Users App!</h2>
 
-{{!-- 
-If startment runs if variable exists 
-or isn't assigned to an eempty value 
---}}
 <ul>
-    {{!-- 
-    In code below "each" interates over the "users" properties such as
-    "this.firstname" which refers to the property inside the array of objects
-    --}}
+    
     {{#each show_users}}
         <li>firstname: {{this.firstname}}</li>
         <li>lastname: {{this.lastname}}</li>
@@ -20,15 +13,48 @@ or isn't assigned to an eempty value
 
 
 <ul>
-    {{!-- 
-    In code below renders each user according to id parameter
-    --}}
+  
         <li>firstname: {{user.firstname}}</li>
         <li>lastname: {{user.lastname}}</li>
         <li>email: {{user.email}}</li>
         <li>password: {{user.password}}</li>
         <hr>
 </ul>
+
+<ul>
+   
+        <li>first name: {{firstname}}</li>
+        <li>last name: {{lastname}}</li>
+        <li>email: {{email}}</li>
+        <li>password: {{password}}</li>
+        <hr>
+</ul>
+
+<form action="/users" method="post">
+
+  <div class="mb-3">
+    <label for="firstname" class="form-label">first name</label>
+    <input type="text" class="form-control" name="firstname" id="firstname">
+  </div>
+
+  <div class="mb-3">
+    <label for="lastname" class="form-label">last name</label>
+    <input type="text" class="form-control" name="lastname" id="lastname">
+  </div>
+
+    <div class="mb-3">
+    <label for="email" class="form-label">email</label>
+    <input type="email" class="form-control" name="email" id="email">
+  </div>
+
+    <div class="mb-3">
+    <label for="password" class="form-label">password</label>
+    <input type="password" class="form-control" name="password" id="password">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
 
 
 
