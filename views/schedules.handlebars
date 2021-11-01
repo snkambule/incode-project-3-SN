@@ -1,10 +1,5 @@
 <h2>Welcome to the Schedules App!</h2>
 
-{{!-- 
-If startment runs if variable exists 
-or isn't assigned to an eempty value 
---}}
-{{#if show_schedules}}
 <ul>
     {{!-- 
     In code below "each" interates over the "schedules" properties such as
@@ -18,10 +13,26 @@ or isn't assigned to an eempty value
         <hr>
     {{/each}}
 </ul>
-{{!-- 
-Else startment runs if DOESN'T variable exist
-or IS assigned to an eempty value 
---}}
-{{else}}
-    <p><em>There are currently no schedules.</em></p>
-{{/if}}
+
+
+
+    {{!-- 
+    In code below "each" interates over the "schedules" properties such as
+    "this.user_id" which refers to the property inside the array of objects
+    --}}
+
+ <ul>
+    {{!-- 
+    In code below "each" interates over the "schedules" properties such as
+    "this.user_id" which refers to the property inside the array of objects
+    --}}
+    {{#each show}}
+        <li>user id: {{this.user_id}}</li>
+        <li>day: {{this.day}}</li>
+        <li>start at: {{this.start_at}}</li>
+        <li>end at: {{this.end_at}}</li>
+        <hr>
+   {{/each}}
+    
+</ul>
+   

@@ -4,11 +4,11 @@ const app = express();
 
 const {users, schedules} = require('./data');
 
-const bcrypt = require('bcrypt');
+const _ = require('underscore');
 
-const { application } = require('express');
 
-const expbs = require('express-handlebars')
+const exphbs = require('express-handlebars')
+
 
 const port = 3000;
 
@@ -16,8 +16,20 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+var hbs = exphbs.create({});
+
+//helpers
+hbs.handlebars.registerHelper("index", function(id) {
+  
+var id = array.map(function(x) {return x.id; }).indexOf(idYourAreLookingFor);
+var objectFound = array[id];
+
+return objectFound;
+
+});
+
 //view engine set-up
-app.engine('handlebars', expbs({ defaultLayout: 'main'}))
+app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
 app.set('view engine', 'handlebars');
 
 //static files 
@@ -82,6 +94,7 @@ app.get('/',(req,res)=>{
   res.render('index');
 })
 
+
 app.get('/users',(req,res)=>{
   res.render('users', {
     //show_users: users
@@ -90,12 +103,34 @@ app.get('/users',(req,res)=>{
 
 })
 
+
+
+app.get('/users/:id', (req, res) => {
+let id = req.params.id;
+res.render('users',  {user: users[id]});
+
+});
+
+
 app.get('/schedules',(req,res)=>{
   res.render('schedules', {
     //show_schedules: schedules
     show_schedules: schedules
 });
 
+})
+
+app.get("/users/:id/schedules", (req,res) => { 
+
+  
+   let id = parseInt(req.params.id);
+   let sweet = _.where(schedules, {user_id : id});
+
+   console.log(sweet)
+
+  res.render('schedules',  {show: sweet});
+
+   
 })
 
 app.listen(port, () => {

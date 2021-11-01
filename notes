@@ -1,0 +1,14 @@
+<form>
+    <div class="form-group">
+        <label for="day">Day</label>
+        <select name="day" id="day" class="form-control">
+            <option value="monday" {{{select act.day 'monday'}}}>Monday</option>
+            <option value="tuesday" {{{select act.day 'tuesday'}}}>Tuesday</option>
+            <option value="wednesday" {{{select act.day 'wednesday'}}}>Wednesday</option>
+            <option value="thursday" {{{select act.day 'thursday'}}}>Thursday</option>
+            <option value="friday" {{{select act.day 'friday'}}}>Friday</option>
+            <option value="saturday" {{{select act.day 'saturday'}}}>Saturday</option>
+            <option value="sunday" {{{select act.day 'sunday'}}}>Sunday</option>
+        </select>
+    </div>
+</form>
