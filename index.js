@@ -4,6 +4,8 @@ const  app = express();
 
 const {users, schedules} = require('./data');
 
+const user = require('./routes/user');
+
 const _ = require('underscore');
 
 const path = require('path');
@@ -15,6 +17,8 @@ const port = 3000;
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
+
+app.use('/user', user);
 
 //view engine set-up
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
@@ -92,7 +96,8 @@ app.post('/users/new', function(req, res){
         email: body.email,
         password: body.password
     };
-     let newPosts= users.push(creation)
+     let newPosts = users.push(creation)
+     console.log(newPosts);
     res.redirect('/users', newPosts);
 });
 
