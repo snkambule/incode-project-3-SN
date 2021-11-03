@@ -1,10 +1,7 @@
 <h2>Welcome to the Schedules App!</h2>
 
 <ul>
-    {{!-- 
-    In code below "each" interates over the "schedules" properties such as
-    "this.user_id" which refers to the property inside the array of objects
-    --}}
+    
     {{#each show_schedules}}
         <li>user id: {{this.user_id}}</li>
         <li>day: {{this.day}}</li>
@@ -14,18 +11,8 @@
     {{/each}}
 </ul>
 
-
-
-    {{!-- 
-    In code below "each" interates over the "schedules" properties such as
-    "this.user_id" which refers to the property inside the array of objects
-    --}}
-
  <ul>
-    {{!-- 
-    In code below "each" interates over the "schedules" properties such as
-    "this.user_id" which refers to the property inside the array of objects
-    --}}
+  
     {{#each show}}
         <li>user id: {{this.user_id}}</li>
         <li>day: {{this.day}}</li>
@@ -36,3 +23,17 @@
     
 </ul>
    
+<form action="/schedules" method="post" role="form" enctype="application/x-www-form-urlencoded">
+            user id: <input type="text" name="user_id"> <br><br>
+            day: <input type="text" name="day"> <br><br>
+            start at: <input type="text" name="start_at"> <br><br>
+            end at: <input type="text" name="end_at"> <br><br>
+         <input type="submit" value="submit">        
+ </form>
+ <br><br>
+
+        <li>user id: {{user_id}}</li>
+        <li>day: {{day}}</li>
+        <li>start at: {{start_at}}</li>
+        <li>end at: {{end_at}}</li>
+        <hr>

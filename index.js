@@ -4,8 +4,6 @@ const  app = express();
 
 const {users, schedules} = require('./data');
 
-const user = require('./routes/user');
-
 const _ = require('underscore');
 
 const path = require('path');
@@ -14,11 +12,10 @@ const exphbs = require('express-handlebars')
 
 const port = 3000;
 
-app.use(express.json());
+app.use(express.json())
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 
-app.use('/user', user);
 
 //view engine set-up
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}))
@@ -28,10 +25,12 @@ app.set('view engine', 'handlebars')
 //static files 
 app.use('/static', express.static('public'));
 
-app.get('/index.html', function(req, res) {
-  res.sendFile(__dirname + "/" + "index.html");
+app.use((req, res, next) => {
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.append('Access-Control-Allow-Headers', 'Content-Type');
+  next();
 });
-
 
 
 //Routing
@@ -78,28 +77,34 @@ app.get("/users/:id/schedules", (req,res) => {
    
 })
 
-/*app.post('/users/new', (req, res) => {
+
+
+
+app.get('/users/new', function(req, res) {
+  res.render('users', { title: 'Schedule Website' });
+  });
+
+app.post('/users', (req, res) => {
 
   let user = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, 
   password: req.body.password }
   users.push(user)
-  res.redirect('/users', users);
+  res.render('users',user);
+  
+  });
 
-  });*/
-
-app.post('/users/new', function(req, res){
-    let body = req.body;
-
-    let creation = {
-        first_name: body.firstname,
-        last_name: body.lastname,
-        email: body.email,
-        password: body.password
-    };
-     let newPosts = users.push(creation)
-     console.log(newPosts);
-    res.redirect('/users', newPosts);
-});
+  app.get('/schedules/new', function(req, res) {
+    res.render('schedules', { title: 'Schedule Website' });
+    });
+  
+  app.post('/schedules', (req, res) => {
+  
+    let schedule = { user_id: req.body.user_id, day: req.body.day, start_at: req.body.start_at, 
+    end_at: req.body.end_at }
+    schedules.push(schedule)
+    res.render('schedules',schedule);
+    
+    });
 
 
 app.listen(port, () => {
